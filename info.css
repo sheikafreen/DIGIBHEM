@@ -1,0 +1,81 @@
+body{
+    justify-content: space-around;
+    margin: auto;
+    text-align: center;
+    font-family: inter;
+    background: url(b.png);
+}
+::-webkit-scrollbar{
+    display: none;
+}
+
+.nav{
+    align-items: center;
+    display: flex;
+    margin: 0;
+    width: 100vw;
+    justify-content: space-between;
+}
+.nav h1{
+    font-weight: 200;
+    width: auto;
+    padding: 5px 50px;
+}
+.nav .list {
+    padding-right: 50px;
+}
+.nav .list a{
+    font-weight: 600;
+    padding: 2px 25px;
+    text-decoration: none;
+    color: black;
+}
+.nav .list a:hover{
+    font-weight: 400;
+    filter: drop-shadow(0 1px 15px grey);
+    transition: fade 5s;
+}
+@keyframes fade {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity:1;
+    }
+}
+h1{
+    font-family: Italianno;
+    font-weight: 400;
+    font-size: 54px;
+}
+#bookingInfo {
+    color: rgb(82, 92, 100);
+    background-color: aliceblue;
+    padding: 50px;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 10px 0px 50px rgba(35, 52, 94, 0.286);
+    width: 50%;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Adjust the gap between label-content pairs */
+}
+
+#bookingInfo p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#bookingInfo span {
+    width: 45%;
+}
+#bookingInfo strong {
+    width: 45%; /* Adjust the width as needed */
+    text-align: right;
+    margin-right: 10px; /* Add spacing between label and colon */
+}
+.Content{
+    text-align: left;
+}

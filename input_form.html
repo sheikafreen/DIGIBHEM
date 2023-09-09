@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotelName/RegistrationForm</title>
+    
+    <link rel="stylesheet" href="input_form.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Genos:ital,wght@0,100;0,200;0,300;0,500;0,700;1,100;1,300&family=Inter:wght@100;200;300;400&family=Jaldi:wght@400;700&family=Roboto:ital,wght@0,100;0,300;1,100;1,300&display=swap" rel="stylesheet"></head>
+
+</head>
+<body style="background: url(b1.png);">
+  <form action="" id="myForm">
+  <div class="nav">
+    <h1 style="font-family: Italianno;
+    font-size: 54px">Hotel name</h1>
+    <div class="list">
+        <a href="index.html">Home</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="info.html">My Bookings</a>
+        <a href="">About us</a>
+    </div>
+    
+</div>
+    <h1 class="heading">Booking</h1>
+      <div class="fourm">
+          <input type="text" name="name" id="name" class="input" placeholder="Name" required>
+          <input type="tel" name="name" id="mobileNo" class="input" maxlength="10" placeholder="Mobile Number" required>
+          <input type="date" id="datePicker" name="datePicker"  required>
+
+          <div class="slider">
+            <label for="numberRange">Number of Nights:</label>
+            <input type="range" id="numberRange" min="1" max="10" value="1">
+            <span id="selectedNights">1</span>
+          </div>
+        
+          <!-- Number of Persons -->
+          <div class="slider">
+            <label for="personRange">Additional Prople(if any)</label>
+            <input type="range" id="personRange" min="0" max="5" value="0">
+            <span id="selectedPersons">1</span>
+          </div>
+
+          <div class="container">
+              <h1>Select Your Room</h1>
+              <div class="options">
+                <label class="option">
+                  <input type="radio" name="room" value="deluxe" required>
+                  Deluxe Room
+                </label>
+                <label class="option">
+                  <input type="radio" name="room" value="suite" required>
+                  Suite Room
+                </label>
+              </div>
+          </div>
+          <div class="container">
+            <h1 style="margin-bottom: 10px;">Anamilities</h1>
+            <label class="choose">
+              <input type="checkbox" class="anamilities"  name="" id="Air_conditioner" >
+              <br>Air Conditioner (1000/-)
+            </label>
+            <label class="choose">
+              <input type="checkbox" class="anamilities" name="" id="locker" >
+              <br>Locker (300/-)
+            </label>
+          </div>
+          <input type="number" name="advance" id="AdvanceAmount" class="input" maxlength="5" placeholder="Advance paid" required>
+
+          <button type="button" id="submitBtn">Proceed to Payment</button>
+        </div>
+        </form>
+    <script>
+      function redirectPage() {
+      // Check if the form is valid
+      if (document.getElementById("myForm").checkValidity()) {
+        // Redirect to another page
+        window.location.href = "info.html";
+      } else {
+        alert("Please fill out all required fields.");
+      }
+    }
+
+
+
+        const nightsRangeInput = document.getElementById('numberRange');
+        const selectedNightsSpan = document.getElementById('selectedNights');
+
+        nightsRangeInput.addEventListener('input', () => {
+            const selectedNightsValue = nightsRangeInput.value;
+            selectedNightsSpan.textContent = selectedNightsValue;
+        });
+
+        const personsRangeInput = document.getElementById('personRange');
+        const selectedPersonsSpan = document.getElementById('selectedPersons');
+
+        personsRangeInput.addEventListener('input', () => {
+            const selectedPersonsValue = personsRangeInput.value;
+            selectedPersonsSpan.textContent = selectedPersonsValue;
+        });
+
+
+        /*room selection*/
+        const options = document.querySelectorAll(".option");
+
+        options.forEach(option => {
+          option.addEventListener("click", function() {
+            options.forEach(opt => opt.classList.remove("selected"));
+            option.classList.add("selected");
+          });
+        });
+        
+        document.getElementById("submitBtn").addEventListener("click", function() {
+          const selectedOption = document.querySelector(".option.selected");
+          const selectedRoom = selectedOption.querySelector('input[name="room"]').value;
+          const resultElement = document.getElementById("result");
+        
+          if (selectedRoom === "deluxe") {
+            resultElement.textContent = "You have selected the Deluxe Room.";
+          } else if (selectedRoom === "suite") {
+            resultElement.textContent = "You have selected the Suite Room.";
+          }
+        });
+        
+
+
+
+        document.getElementById("submitBtn").addEventListener("click", function () {
+        // Collect user inputs
+        const name = document.getElementById("name").value;
+        const mobileNumber = document.getElementById("mobileNo").value;
+        const advancePayment = document.getElementById("AdvanceAmount").value;
+        const checkInDate = document.getElementById("datePicker").value;
+        const numNights = parseInt(document.getElementById("numberRange").value);
+        const numPersons = parseInt(document.getElementById("personRange").value);
+        const selectedOption = document.querySelector(".option.selected");
+        const selectedRoom = selectedOption.querySelector('input[name="room"]').value;
+        const selectedAmenities = [];
+        const amenitiesCheckboxes = document.querySelectorAll(".anamilities");
+        amenitiesCheckboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                selectedAmenities.push(checkbox.id);
+            }
+        });
+        // Calculate costs
+        const roomRate = (selectedRoom === "deluxe") ? 2500 : 4000;
+        // Calculate amenities cost
+        let amenitiesCost = 0;
+
+        if (selectedAmenities.includes('Air_conditioner')) {
+            amenitiesCost += 1000; // Add 1000 if Air Conditioner is selected
+        }
+
+        if (selectedAmenities.includes('locker')) {
+            amenitiesCost += 300; // Add 300 if Locker is selected
+        }        
+        const totalRoomCost = roomRate * numNights;
+        const totalAmenitiesCost = amenitiesCost * numNights;
+        const totalCost = totalRoomCost + totalAmenitiesCost;
+        const balanceAmount = totalCost - advancePayment;
+
+        // Create a data object
+        const bookingInfo = {
+            name,
+            mobileNumber,
+            checkInDate,
+            numNights,
+            numPersons,
+            selectedRoom,
+            selectedAmenities,
+            advancePayment,
+            totalRoomCost,
+            totalAmenitiesCost,
+            totalCost,
+            balanceAmount
+        };
+
+        // Store data in localStorage
+        localStorage.setItem('bookingInfo', JSON.stringify(bookingInfo));
+
+        // Redirect to info.html
+        window.location.href = 'info.html';
+    });
+    </script>
+</body>
+</html>
