@@ -6,27 +6,28 @@ class TicTacToe:
         self.current_player = "X"
         self.winner = None
 
-    def create_board(self):
+   def create_board(self):
         cols = st.columns(3)
         for i in range(9):
             with cols[i % 3]:
                 button_label = self.board[i]
-                button_click = st.button(label=button_label, key=str(i), on_click=self.handle_click(i))
+                # Use partial function to create a unique handler for each button click
+                on_click_handler = partial(self.handle_click, i)
+                button_click = st.button(label=button_label, key="button_" + str(i), on_click=on_click_handler)
 
-    def handle_click(self, index):
-        def inner():
-            if self.board[index] == " " and self.winner is None:
-                self.board[index] = self.current_player
-                if self.check_winner():
-                    self.winner = f"Player {self.current_player} wins!"
-                    st.balloons()
-                elif self.check_tie():
-                    self.winner = "It's a tie!"
-                else:
-                    self.current_player = "O" if self.current_player == "X" else "X"
-                self.update_ui()
-        return inner
 
+   def handle_click(self, index):
+        if self.board[index] == " " and self.winner is None:
+            self.board[index] = self.current_player
+            if self.check_winner():
+                self.winner = f"Player {self.current_player} wins!"
+                st.balloons()
+            elif self.check_tie():
+                self.winner = "It's a tie!"
+            else:
+                self.current_player = "O" if self.current_player == "X" else "X"
+        self.update_ui()
+       
     def check_winner(self):
         win_conditions = [
             [self.board[0], self.board[1], self.board[2]],
@@ -44,12 +45,12 @@ class TicTacToe:
         return " " not in self.board
 
     def update_ui(self):
-        st.title("Tic Tac Toe")
-        self.create_board()
-        if self.winner:
-            st.write(self.winner)
-            if st.button("Play Again"):
-                self.reset_game()
+    st.title("Tic Tac Toe")
+    self.create_board()  # Ensure each button has a unique key
+    if self.winner:
+        st.write(self.winner)
+        if st.button("Play Again"):
+            self.reset_game()
 
     def reset_game(self):
         self.board = [" " for _ in range(9)]
