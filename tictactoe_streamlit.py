@@ -10,25 +10,22 @@ class TicTacToe:
         cols = st.columns(3)
         for i in range(9):
             with cols[i % 3]:
-                button_key = f"{self.current_player}_{i}"
                 button_label = self.board[i]
-                button_click = f"button_click({i})"
-                st.markdown(
-                    f'<button onclick="{button_click}" id="{button_key}">{button_label}</button>',
-                    unsafe_allow_html=True
-                )
+                button_click = st.button(label=button_label, key=str(i), on_click=self.handle_click(i))
 
-    def click_button(self, index):
-        if self.board[index] == " " and self.winner is None:
-            self.board[index] = self.current_player
-            if self.check_winner():
-                self.winner = f"Player {self.current_player} wins!"
-                st.balloons()
-            elif self.check_tie():
-                self.winner = "It's a tie!"
-            else:
-                self.current_player = "O" if self.current_player == "X" else "X"
-        self.update_ui()
+    def handle_click(self, index):
+        def inner():
+            if self.board[index] == " " and self.winner is None:
+                self.board[index] = self.current_player
+                if self.check_winner():
+                    self.winner = f"Player {self.current_player} wins!"
+                    st.balloons()
+                elif self.check_tie():
+                    self.winner = "It's a tie!"
+                else:
+                    self.current_player = "O" if self.current_player == "X" else "X"
+                self.update_ui()
+        return inner
 
     def check_winner(self):
         win_conditions = [
@@ -60,10 +57,7 @@ class TicTacToe:
         self.winner = None
         self.update_ui()
 
-@st.cache(allow_output_mutation=True)
-def button_click(index):
-    game.click_button(index)
-
 if __name__ == "__main__":
     game = TicTacToe()
     game.update_ui()
+
