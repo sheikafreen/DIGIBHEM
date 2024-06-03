@@ -10,8 +10,10 @@ class TicTacToe:
         cols = st.columns(3)
         for i in range(9):
             with cols[i % 3]:
-                if st.button(self.board[i], key=str(i)):
+                button_key = f"{self.current_player}_{i}_{'_'.join(self.board)}"  # Unique button key
+                if st.button(self.board[i], key=button_key):
                     self.click_button(i)
+
 
     def click_button(self, index):
         if self.board[index] == " " and self.winner is None:
@@ -58,10 +60,3 @@ class TicTacToe:
 if __name__ == "__main__":
     game = TicTacToe()
     game.update_ui()
-def create_board(self):
-    cols = st.columns(3)
-    for i in range(9):
-        with cols[i % 3]:
-            button_key = f"{self.current_player}_{i}_{'_'.join(self.board)}"  # Unique button key
-            if st.button(self.board[i], key=button_key):
-                self.click_button(i)
