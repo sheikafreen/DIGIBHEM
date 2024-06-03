@@ -58,3 +58,10 @@ class TicTacToe:
 if __name__ == "__main__":
     game = TicTacToe()
     game.update_ui()
+def create_board(self):
+    cols = st.columns(3)
+    for i in range(9):
+        with cols[i % 3]:
+            button_key = f"{self.current_player}_{i}"  # Unique button key
+            if st.button(self.board[i], key=button_key):
+                self.click_button(i)
