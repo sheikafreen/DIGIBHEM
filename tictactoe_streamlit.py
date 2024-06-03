@@ -10,10 +10,13 @@ class TicTacToe:
         cols = st.columns(3)
         for i in range(9):
             with cols[i % 3]:
-                button_key = f"{self.current_player}_{i}_{'_'.join(self.board)}"  # Unique button key
-                if st.button(self.board[i], key=button_key):
-                    self.click_button(i)
-
+                button_key = f"{self.current_player}_{i}"
+                button_label = self.board[i]
+                button_click = f"button_click({i})"
+                st.markdown(
+                    f'<button onclick="{button_click}" id="{button_key}">{button_label}</button>',
+                    unsafe_allow_html=True
+                )
 
     def click_button(self, index):
         if self.board[index] == " " and self.winner is None:
@@ -56,6 +59,10 @@ class TicTacToe:
         self.current_player = "X"
         self.winner = None
         self.update_ui()
+
+@st.cache(allow_output_mutation=True)
+def button_click(index):
+    game.click_button(index)
 
 if __name__ == "__main__":
     game = TicTacToe()
