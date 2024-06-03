@@ -45,12 +45,12 @@ class TicTacToe:
         return " " not in self.board
 
     def update_ui(self):
-    st.title("Tic Tac Toe")
-    self.create_board()
-    if self.winner:
-        st.write(self.winner)
-        if st.button("Play Again"):
-            self.reset_game()
+        st.title("Tic Tac Toe")
+        self.create_board()
+        if self.winner:
+            st.write(self.winner)
+            if st.button("Play Again"):
+                self.reset_game()
 
     def reset_game(self):
         self.board = [" " for _ in range(9)]
