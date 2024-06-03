@@ -1,4 +1,5 @@
 import streamlit as st
+from functools import partial
 
 class TicTacToe:
     def __init__(self):
@@ -6,7 +7,7 @@ class TicTacToe:
         self.current_player = "X"
         self.winner = None
 
-   def create_board(self):
+    def create_board(self):
         cols = st.columns(3)
         for i in range(9):
             with cols[i % 3]:
@@ -15,8 +16,7 @@ class TicTacToe:
                 on_click_handler = partial(self.handle_click, i)
                 button_click = st.button(label=button_label, key="button_" + str(i), on_click=on_click_handler)
 
-
-   def handle_click(self, index):
+    def handle_click(self, index):
         if self.board[index] == " " and self.winner is None:
             self.board[index] = self.current_player
             if self.check_winner():
@@ -61,4 +61,3 @@ class TicTacToe:
 if __name__ == "__main__":
     game = TicTacToe()
     game.update_ui()
-
